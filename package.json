@@ -4,7 +4,7 @@
   "description": "An awesome playlist builder for Spotify",
   "main": "Gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/karma/bin/karma start"
   },
   "author": "Zachary Babtkis <zackbabtkis@gmail.com>",
   "license": "ISC",
