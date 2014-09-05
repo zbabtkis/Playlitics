@@ -1,0 +1,11 @@
+{
+  "name": "Playlitics",
+  "version": "0.0.0",
+  "description": "An awesome playlist builder for Spotify",
+  "main": "Gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zachary Babtkis <zackbabtkis@gmail.com>",
+  "license": "ISC"
+}
