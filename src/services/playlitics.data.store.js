@@ -1,5 +1,5 @@
 /**
- * Playlitics.Store
+ * Playlitics.Data [ Service ] - Store
  * localStorage DataStore service
  */
 ;(function ( ng ) {
@@ -20,8 +20,8 @@
 
 	StoreNotFoundError.prototype = new ReferenceError;
 
-	// Define new submodule for service
-	ng.module('Playlitics.Store', [])
+	// Use Playlitics.Data namespace for service
+	ng.module('Playlitics.Data')
 
 		.service( 'Store', function( $window, $q) {
 

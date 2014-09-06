@@ -1,7 +1,7 @@
 describe("Store", function() {
 	
 	beforeEach(function() {
-		module("Playlitics.Store");
+		module("Playlitics.Data");
 	});
 
 	beforeEach(inject(function($window, $rootScope, Store) {
