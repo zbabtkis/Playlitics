@@ -8,20 +8,46 @@
 	<title>Playlitics</title>
 </head>
 <body ng-app="Playlitics">
-	
-	<spotify-search>
-		<track-list ng-model="tracks" on-track-select="addtrack" />
-	</spotify-search>
 
-	<!-- <ng-view></ng-view> -->
+	<div ng-controller="PlaylistsCtrl">
+
+		<form class="create-playlist">
+			<input ng-model="nextPlaylist.name" 
+				placeholder="Enter playlist name" />
+			<button ng-click="addPlaylist(nextPlaylist)">+</button>
+		</form>
+
+		<section class="playlist-list">
+			<ul>
+				<li ng-repeat="plist in playlists">
+					<a permalink="plist.name"><h1>{{plist.name}}</h1></a>
+					<p class="tags" ng-repeat="tag in plist.tags">
+						<span class="tag">{{tag}}</span>
+					</p>
+					<button ng-click="playlists.splice($index, 1)">Delete</button>
+				</li>
+			</ul>
+		</section>
+
+			
+		<spotify-search>
+			<track-list ng-model="tracks" on-track-select="addtrack" />
+		</spotify-search>
+		<!-- <ng-view></ng-view> -->
+	</div>
 
 	<script src="./components/angular/angular.min.js"></script>
+	
 	<script src="./src/services/playlitics.data.js"></script>
 	<script src="./src/services/playlitics.data.spotify.js"></script>
 	<script src="./src/services/playlitics.data.store.js"></script>
+	<script src="./src/services/playlitics.data.permalink.js"></script>
 	<script src="./src/directives/playlitics.dom.js"></script>
 	<script src="./src/directives/playlitics.dom.spotifysearch.js"></script>
 	<script src="./src/directives/playlitics.dom.tracklist.js"></script>
+	<script src="./src/directives/playlitics.dom.permalink.js"></script>
+
 	<script src="./src/app.js"></script>
+	<script src="./src/controllers/playlitics.playlists.ctrl.js"></script>
 </body>
 </html>
