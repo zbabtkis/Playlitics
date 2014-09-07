@@ -12,7 +12,9 @@
 	"use strict";
 
 	// Register 'Playlitics' main app module
-	var app = ng.module('Playlitics', []);
+	var app = ng.module('Playlitics', [
+		'Playlitics.Data',
+		'Playlitics.DOM']);
 
 }).call( this, angular )
 
