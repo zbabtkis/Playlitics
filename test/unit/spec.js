@@ -1,20 +1,155 @@
 describe("PlaylistsCtrl", function () {
 
-	describe("#createPlatlist", function() {
-		it("adds a playlist object to $scope.playlists", function() {
+	function createPlaylist() {
+		return {
+			name: "",
+			route: "",
+			tags: [],
+			tracks: []
+		};
+	}
 
+	beforeEach(function() {
+		module("Playlitics");
+	});
+
+	beforeEach(inject(function($controller, $rootScope, $q) {
+
+		// Mock store
+		this.Store = {
+			_data: {},
+			fetch: function(store) {
+				var d = $q.defer();
+
+				if( this._data[store] ) {
+					d.resolve(this._data[store]);
+				} else {
+					d.reject("Error");
+				}
+
+				return d.promise;
+			},
+			persist: function(store, data) {
+				this._data[store] = data;
+			}
+		};
+
+		this.scope = $rootScope.$new();
+		this.$rootScope = $rootScope;
+
+		this.ctrl = $controller('PlaylistsCtrl', {
+			$scope: this.scope,
+			Store: this.Store
 		});
+		
+	}));
+
+	describe("#addPlatlist", function() {
+		it("adds a playlist object to $scope.playlists", function() {
+			// setup
+			var playlist = createPlaylist();
+
+			playlist.name = "life is strange";
+
+			// run addPlaylist()
+			this.scope.addPlaylist(playlist);
+
+			// assert that playlist is now in array
+			expect(this.scope.playlists.indexOf(playlist)).not.toEqual(-1);
+		});
+
+		it("Resets nextPlaylist on scope", function() {
+			// setup
+			var playlist = this.scope.nextPlaylist = createPlaylist();
+
+			playlist.name = "life is good though";
+
+			// run addPlaylist()
+			this.scope.addPlaylist(playlist);
+
+			// assert that nextPlaylist has been reset
+			expect(this.scope.nextPlaylist).not.toEqual(playlist);
+		});
+
+		it("doesn't add playlist if name is null", function() {
+			// setup
+			var playlist = createPlaylist();
+
+			// run addPlaylist()
+			this.scope.addPlaylist(playlist);
+
+			// assert that playlist is not in array
+			expect(this.scope.playlists.indexOf(playlist)).toEqual(-1);
+		});
+
+		it("doesn't allow playlist with same name as an existing playlist", function() {
+			var _this = this;
+
+			// setup
+			var playlist1 = createPlaylist()
+			  , playlist2 = createPlaylist();
+
+			playlist1.name = playlist2.name = "we are all the same";
+
+			// run addPlaylist()
+			this.scope.addPlaylist(playlist1);
+
+			expect(function() {
+				_this.scope.addPlaylist(playlist2)
+			}).toThrow();
+
+			// assert that nextPlaylist has been reset
+			expect(this.scope.nextPlaylist).not.toEqual(playlist);
+		})
 	});
 
 	describe("#loadPlaylists()", function() {
 		it("loads an array of playlists into $scope.playlists", function() {
-			
+			this.Store._data.playlists = [createPlaylist()];
+
+			this.Store._data.playlists[0].name = "the birds and the bees";
+
+			runs(function() {
+				this.scope.loadPlaylists( "playlists" );
+				this.$rootScope.$digest();
+			});
+
+			waitsFor(function() {
+				return this.scope.playlists.length;
+			}, "playlists has length", 500);
+
+			runs(function() {
+				expect(this.scope.playlists.length).toEqual(1);
+			});
 		});
 
 		it("doesn't overwrite exitsting playlists in $scope.playlists", function() {
+			var playlist1 = createPlaylist()
+			  , playlist2 = createPlaylist();
+
+			playlist1.name = "onesong";
+			playlist2.name = "twosongs";
+
+			this.scope.playlists = [playlist1];	
+			this.Store._data.playlists = [playlist2];
+
+			runs(function() {
+				this.scope.loadPlaylists( "playlists" );
+				this.$rootScope.$digest();
+			});
+
+			waitsFor(function() {
+				return this.scope.playlists.length === 2;
+			}, "playlists has length", 50);
+
+			runs(function() {
+				expect(this.scope.playlists[0].name).toEqual("onesong");
+				expect(this.scope.playlists[1].name).toEqual("twosongs");
+			});
 
 		});
 	});
+});
 
 describe("Playlitics.Data.Store", function() {
 	
@@ -100,6 +235,18 @@ describe("Playlitics.Data.Store", function() {
 			expect(this.Store.serialize).toHaveBeenCalledWith(greeting)
 		});
 
+		// If $$hashKey is saved, ng-repeat will break!
+		it("ignores $$hashKey when serializing", function() {
+			// setup 
+			var playlist = [{$$hashKey: "object:4", name: "feets too big"}]; 
+
+			// run
+			this.Store.persist('playlist', playlist);
+
+			// assert
+			expect(JSON.parse(this.Store._storage.playlist)[0].$$hashKey).toBe(undefined);
+		});
+
 		it("stores serialized object", function() {
 			// setup 
 			var playlist = {playlist: ["feets too big"]}; 
@@ -123,7 +270,7 @@ describe("Playlitics.Data.Spotify", function() {
 	beforeEach(inject(function( Spotify, $httpBackend ) {
 		var songs = ["hello", "goodbye"];
 
-		$httpBackend.expectJSONP(/http\:\/\/ws.spotify.com.*?/g)
+		$httpBackend.expectGET(/http\:\/\/ws.spotify.com.*?/g)
 			.respond(201, songs);
 
 		this.$httpBackend = $httpBackend;
