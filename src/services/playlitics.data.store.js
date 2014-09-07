@@ -66,7 +66,7 @@
 			 * @return { Object } - JS object deserialized from string
 			 */
 			this.deserialize = function ( data ) {
-				return JSON.parse(data);
+				return ng.fromJson(data);
 			};
 
 			/**
@@ -77,7 +77,7 @@
 			 * @return { String } - serialized string from object
 			 */
 			this.serialize = function ( data ) {
-				return JSON.stringify(data);
+				return ng.toJson(data);
 			};
 
 			/**
