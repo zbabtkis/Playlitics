@@ -16,9 +16,6 @@
 
 			// Spotify track query endpoint
 			settings.API_ENDPOINT            = "http://ws.spotify.com/search/1/track.json";
-			
-			// JSONP window callback name
-			settings.JSONP_RESPONSE_CALLBACK = "JSON_CALLBACK"
 
 			/**
 			 * #search( q )
@@ -28,7 +25,10 @@
 			 * @return { Promise } - promise of search response
 			 */
 			this.search = function( q ) {
-				return $http.jsonp(settings.API_ENDPOINT + "?q=" + this.safeQuery(q) + "&callback=" + settings.JSONP_RESPONSE_CALLBACK);
+				// CORS support
+				delete $http.defaults.headers.common['X-Requested-With'];
+
+				return $http.get(settings.API_ENDPOINT + "?q=" + this.safeQuery(q));
 			};
 
 			/**
