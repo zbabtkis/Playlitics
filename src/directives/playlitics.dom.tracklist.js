@@ -4,7 +4,7 @@
 
 	ng.module("Playlitics.DOM")
 		
-		.directive( "trackList", function( ) {
+		.directive( "trackList", function( $parse ) {
 			return {
 				restrict: 'EA',
 				
