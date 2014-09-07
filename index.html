@@ -8,9 +8,20 @@
 	<title>Playlitics</title>
 </head>
 <body ng-app="Playlitics">
-	<div ng-controller="playlists">
+	
+	<spotify-search>
+		<track-list ng-model="tracks" on-track-select="addtrack" />
+	</spotify-search>
 
-	</div>
-	<ng-view></ng-view>
+	<!-- <ng-view></ng-view> -->
+
+	<script src="./components/angular/angular.min.js"></script>
+	<script src="./src/services/playlitics.data.js"></script>
+	<script src="./src/services/playlitics.data.spotify.js"></script>
+	<script src="./src/services/playlitics.data.store.js"></script>
+	<script src="./src/directives/playlitics.dom.js"></script>
+	<script src="./src/directives/playlitics.dom.spotifysearch.js"></script>
+	<script src="./src/directives/playlitics.dom.tracklist.js"></script>
+	<script src="./src/app.js"></script>
 </body>
 </html>
