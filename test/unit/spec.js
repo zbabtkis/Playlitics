@@ -1,4 +1,4 @@
-describe("Store", function() {
+describe("Playlitics.Data.Store", function() {
 	
 	beforeEach(function() {
 		module("Playlitics.Data");
@@ -9,6 +9,8 @@ describe("Store", function() {
 		this.Store = Store;
 		this.$rootScope = $rootScope;
 	}));
+
+
 
 	describe("when fetching a stored value", function() {
 
@@ -92,4 +94,63 @@ describe("Store", function() {
 		});
 	});
 	
+});
+
+describe("Playlitics.Data.Spotify", function() {
+
+	beforeEach(function() {
+		module("Playlitics.Data");
+	});
+
+	beforeEach(inject(function( Spotify, $httpBackend ) {
+		var songs = ["hello", "goodbye"];
+
+		$httpBackend.expectJSONP(/http\:\/\/ws.spotify.com.*?/g)
+			.respond(201, songs);
+
+		this.$httpBackend = $httpBackend;
+		this.Spotify = Spotify;
+	}));
+
+	describe("searching spotify songs", function() {
+
+		it("resolves returned promise with an array in data property", function() {
+
+			// setup
+			var response;
+
+			// run
+			runs(function() {
+				this.Spotify.search("jack")
+					.then(function( data ) {
+						response = data;
+					})
+					.catch(function(message) {
+						console.debug( message );
+					});
+
+				this.$httpBackend.flush()
+			});
+
+			waitsFor(function() {
+				return response;
+			}, "search yields results", 100);
+
+			// assert
+			runs(function() {
+				expect(response.data instanceof Array).toBe(true);
+			});
+
+		});
+
+	});
+
+	describe("converting query to safe URI string", function() {
+		it("converts query string to URI safe string", function() {
+			
+			// assert
+			expect(this.Spotify.safeQuery('Jack Johnson')).toBe('Jack%20Johnson');
+		});
+	});
+
 });
