@@ -1,5 +1,5 @@
 <ul>
-	<li ng-repeat="track in tracks">
+	<li ng-click="trackSelect( track )" ng-repeat="track in tracks">
 		<h1 class="track-title">{{track.name}}</h1>
 		<span class="artists">
 			<ul>

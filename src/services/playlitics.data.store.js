@@ -51,7 +51,7 @@
 						new StoreNotFoundError( 'Error: No store exists with name ' + storeName )
 					);
 				} else {
-					d.resolve( this.deserialize( store ) );
+					d.resolve( this.deserialize( Store[ storeName ] ) );
 				}
 
 				// Return a promise for rejected or resolved store request

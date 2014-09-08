@@ -12,7 +12,7 @@
 
 	ng.module('Playlitics')
 
-		.controller('PlaylistsCtrl', function ( $scope, Store ) {
+		.controller('PlaylistsCtrl', function ( $scope, Store, Permalink ) {
 			// Name of data source
 			var STORE_NAME = 'playlists';
 
@@ -53,14 +53,25 @@
 				// Null playlist names should be ignored
 				if ( !playlist || !playlist.name ) return;
 
+				// Don't allow playlists that will have the same permalink as another
 				$scope.playlists.forEach(function(list) {
-					if ( list.name === playlist.name ) {
+					if ( Permalink.create( list.name ) === Permalink.create( playlist.name ) ) {
 						throw new Error("Playlist with name " + list + " already exists");
 					}
 				})
 
 				$scope.playlists.push( playlist );	
 				$scope.nextPlaylist = __createPlaylist();
+			};
+
+			$scope.removePlaylist = function ( playlist ) {
+				var index = $scope.playlists.indexOf( playlist );
+
+				// Allow other parts of app to know that this playlist no longer exists
+				playlist.destroyed = true;
+
+				// Remove playlist from list
+				$scope.playlists.splice(index, 1)
 			};
 
 
@@ -73,8 +84,16 @@
 			$scope.loadPlaylists = function( store ) {
 				Store.fetch( store )
 					.then(function(data) {
-						data.forEach( $scope.addPlaylist );
+						$scope.playlists = data;
 					});
+			};
+
+			/**
+			 * #getPermalink();
+			 * Get URI safe permalink
+			 */
+			$scope.getPermalink = function( name ) {
+				return Permalink.create( name );
 			};
 
 			// On fist load, load all cached playlists

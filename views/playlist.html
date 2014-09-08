@@ -1,0 +1,21 @@
+<article ng-hide="!playlist || playlist.destroyed">
+	<spotify-search>
+		<track-list ng-model="tracks" on-track-select="addtrack" />
+	</spotify-search>
+	<h1>{{playlist.name}}</h1>
+	<section class="tracks">
+		<ul>
+			<li ng-repeat="track in playlist.tracks">
+				<h1 class="track-title">{{track.name}}</h1>
+				<span class="artists">
+					<ul>
+						<li ng-repeat="artist in track.artists"><a ng-href="{{artist.href}}">{{artist.name}}</a></li>
+					</ul>
+				</span>
+			</li>
+		</ul>
+	</section>
+</article>
+<div ng-show="!playlist || playlist.destroyed">
+	This playlist no longer exists. Please select a different playlist
+</div>

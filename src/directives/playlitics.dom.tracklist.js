@@ -12,7 +12,8 @@
 
 				link: function( scope, el, attr ) {
 					var trackSelectCallback = $parse(attr['onTrackSelect'])(scope);
-					el.bind('click', trackSelectCallback);
+
+					scope.trackSelect = trackSelectCallback;
 				}
 			};
 		});

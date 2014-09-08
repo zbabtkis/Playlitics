@@ -11,7 +11,18 @@
 			 * @return { String } - safe name
 			 */
 			this.create = function ( name ) {
-				return "#/" + name.replace(/[\s]+/g, "-").toLowerCase();
+				var safe = name
+
+					// Convert spaces and underscores to dashes
+					.replace(/[\s_]+/g, "-")
+
+					// Strip special characters
+					.replace(/[^a-zA-Z\-]/g, '')
+
+					// Make entire string lowercase 
+					.toLowerCase();
+
+				return safe;
 			};
 		})
 	
