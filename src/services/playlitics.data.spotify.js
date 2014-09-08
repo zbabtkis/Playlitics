@@ -15,7 +15,7 @@
 			var settings = {};
 
 			// Spotify track query endpoint
-			settings.API_ENDPOINT            = "http://ws.spotify.com/search/1/track.json";
+			settings.API_ENDPOINT = "http://ws.spotify.com/search/1/track.json";
 
 			/**
 			 * #search( q )
