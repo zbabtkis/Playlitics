@@ -4,6 +4,9 @@
 		<h2 class='content-title'>{{playlist.name}}</h2>
 		<label class="right"><i class="fa fa-star-o"></i> Coolness Factor
 			<span class="coolness-factor">{{getCoolnessFactor(playlist) | percent}}</span>
+			<p class='duration'>
+				<div class='label'>Playtime: {{getDuration(playlist) | duration}}</div>
+			</p>
 		</label>
 
 		<fieldset class="tags">
