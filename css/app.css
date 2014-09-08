@@ -1,0 +1,216 @@
+
+/**
+ * @colors
+ * blugreen      #38DAC0
+ * darkbluegreen #04755F
+ */
+
+/**
+ * Core
+ */
+
+body {
+	background: #333;
+}
+
+h2 {
+	font-weight: 100;
+}
+
+.button {
+	background: #38DAC0;
+}
+
+.button:hover {
+	background: #04755F;
+}
+
+/**
+ * Header
+ */
+
+#playlitics-header {
+	text-align: center;
+	/**background: url(../img/bg.jpg) top center;*/
+	background: #38DAC0;
+	background-size: cover;
+	padding: 50px 0 50px;
+}
+
+#playlitics-header .title {
+	color: #fff;
+}
+
+#playlitics-header .sub-title {
+	clear: both;
+	width: 100%;
+	float: left;
+	font-size: 1.5rem;
+	color: #04755F;
+}
+
+/**
+ * Layout
+ */
+
+#playlitics-content {
+	padding: 30px 0;
+	background: #333;
+}
+
+.content {
+	background: #eee;
+	padding: 30px;
+}
+
+.content.dark {
+	background: #444;
+	color: #fff;
+}
+
+.content.dark h2 {
+	color: #fff;
+}
+
+.content.dark li {
+	background: #111;
+}
+
+.content.dark li.even {
+	background: #222;
+}
+
+.content-title {
+	padding: 10px;
+}
+
+.no-bezel {
+	padding: 0;
+}
+
+/**
+ * Lists
+ */
+
+.list {
+	overflow: hidden;
+}
+
+.list li {
+	padding: 10px 15px;
+	float: left;
+	width: 100%;
+	background: #f3f3f3;
+}
+
+.list .even {
+	background: #fff;
+}
+
+.handle, .alert {
+	margin-top: 10px;
+}
+
+.action-list .button {
+	float: right;
+}
+
+.action-list h2 {
+	float: left;
+}
+
+.playlist-list h2 {
+	font-size: 1.25em;
+	line-height: 1.25em;
+}
+
+.track-list {
+	margin: 30px 0;
+	box-shadow: 0 0 3px 2px #ccc;
+	border-radius: 5px;
+	/**border: 1px solid #ccc;*/
+}
+
+.track-list h2 {
+	font-size: 1em;
+}
+
+.track-list .track {
+	width: 100%;
+	margin: 0;
+}
+
+.track-list .artists {
+	font-size: .75em;
+	color: #555;
+}
+
+.track-list .duration {
+	float: right;
+}
+
+.spotify-results li {
+	cursor: pointer;
+}
+
+/**
+ * Components
+ * ---------------------------------
+ */
+
+ .tag {
+ 	background: #ddd;
+ 	padding: 0 10px;
+ 	border-radius: 2px;
+ 	margin: 5px;
+ 	margin-left: 0;
+ 	display: inline-block;
+ 	font-size: 12px;
+ 	color: #666;
+ 	cursor: pointer;
+ }
+
+ .tag:last-of-type {
+	margin-right: 0;
+ }
+
+.dropdown {
+	font-size: 10px;
+	padding: 0;
+	box-shadow: 0 0 3px 1px #aaa;
+	max-height: 300px;
+	overflow: scroll;
+	position: absolute;
+	background: #fff;
+	z-index: 999;
+}
+.dropdown h2 {
+	font-size: 1.5em;
+}
+.dropdown li {
+	padding: 10px;
+}
+.dropdown li:hover {
+	background: #f3f3f3;
+}
+.handle {
+	cursor: move;
+}
+
+.ng-repeat-reorder-parent, [ng-repeat-reorder]{
+	z-index: 10;
+	position: relative;
+}
+
+.active-drag-below {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+[ng-repeat-reorder].dragging{
+	z-index: 11;
+	position: absolute;
+	background: #38DAC0;
+}
