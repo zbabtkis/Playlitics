@@ -2,23 +2,29 @@
 
 	<article ng-hide="!playlist || playlist.destroyed" class="playlist">
 		<h2 class='content-title'>{{playlist.name}}</h2>
-		<label class="right"><i class="fa fa-star-o"></i> Coolness Factor
-			<span class="coolness-factor">{{getCoolnessFactor(playlist) | percent}}</span>
-			<p class='duration'>
-				<div class='label'>Playtime: {{getDuration(playlist) | duration}}</div>
-			</p>
-		</label>
+		<div class="row">
+			<div class="small-12 medium-4 columns right">
+				<label class="right"><i class="fa fa-star-o"></i> Coolness Factor
+					<span class="coolness-factor">{{getCoolnessFactor(playlist) | percent}}</span>
+					<p class='duration'>
+						<div class='label'>Playtime: {{getDuration(playlist) | duration}}</div>
+					</p>
+				</label>
+			</div>
 
-		<fieldset class="tags">
-			<legend>Tags</legend>
-			<form ng-submit="playlist.tags.push(nextTag); nextTag=''">
-				<input type="text" placeholder="enter tags..." ng-model="nextTag" />
-			</form>
-			<span class='tag' ng-repeat="tag in playlist.tags">
-				{{tag}}
-				<i class="fa fa-remove" ng-click="removeTag(tag )"></i>
-			</span>
-		</fieldset> <!-- /.tags -->
+			<div class="small-12 medium-8 columns left">
+				<fieldset class="tags">
+					<legend>Tags</legend>
+					<form ng-submit="playlist.tags.push(nextTag); nextTag=''">
+						<input type="text" placeholder="enter tags..." ng-model="nextTag" />
+					</form>
+					<span class='tag' ng-repeat="tag in playlist.tags">
+						{{tag}}
+						<i class="fa fa-remove" ng-click="removeTag(tag )"></i>
+					</span>
+				</fieldset> <!-- /.tags -->
+			</div>
+		</div>
 
 		<spotify-search>
 			<track-list ng-model="tracks" on-track-select="addtrack" />
