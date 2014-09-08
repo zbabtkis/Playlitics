@@ -1,7 +1,7 @@
 Playlitics
 ==========
 
-An awesome Spotify playlist building app for building awesome Spotify playlists
+Build the best playlist on spotify
 
 Installation
 ============
@@ -27,8 +27,8 @@ All tests are located in the test/unit directory
 
 Run the app
 ==========
-If you don't care about running the app locally go to zigzackattack.github.com/Playlitics
+If you don't care about running the app locally go to http://zigzackattack.github.com/Playlitics
 
 Otherwise...
 
-run gulp serve -- the app will be running at localhost:8080 before you can say.... gulp
+run gulp serve -- the app will be running at http://localhost:8080 before you can say.... gulp
