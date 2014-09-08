@@ -33,11 +33,13 @@
 		<spotify-search>
 			<track-list ng-model="tracks" on-track-select="addtrack" />
 		</spotify-search>
-		<!-- <ng-view></ng-view> -->
+
+		<ui-view></ng-view>
 	</div>
 
 	<script src="./components/angular/angular.min.js"></script>
-	
+	<script src="./components/angular-ui-router/release/angular-ui-router.min.js"></script>	
+
 	<script src="./src/services/playlitics.data.js"></script>
 	<script src="./src/services/playlitics.data.spotify.js"></script>
 	<script src="./src/services/playlitics.data.store.js"></script>
