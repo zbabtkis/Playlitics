@@ -11,7 +11,7 @@
 
 	ng.module("Playlitics.DOM")
 
-		.directive("spotifySearch", function ( Spotify ) {
+		.directive("spotifySearch", function ( ) {
 
 			return {
 
@@ -22,26 +22,22 @@
 				// search results
 				transclude: true,
 
-				template: "<section class='search'><input type='text' placeholder='Enter song name' /></section><div ng-transclude></div>",
+				// Load template over HTTP... Prettier that way.
+				templateUrl: "views/spotifysearch.html",
 
 				// Create controller with shared scope for track list
-				controller: function($scope) {
+				controller: function($scope, Spotify) {
+
+					// Holds tracks returned from Spotify search query
 					$scope.tracks = [];	
-				},
 
-				// build functionality around each spotify-search widget
-				link: function( scope, el, attr ) {
-
-					scope.querySpotifySongs = function( e ) {
-
-						// Get the current value of the input
-						var q = e.currentTarget.value;
-
-						// If query string is empty, empty song list 
-						// and don't run query
-						if ( q === "" ) {
-							return scope.songList = [];
-						}
+					/**
+					 * #runSearch( q );
+					 * Query's spotify service for tracks
+					 * 
+					 * @param { String } - q - user's search text
+					 */
+					$scope.runSearch = function ( q ) {
 
 						// Query spotify service for given song name
 						Spotify.search( q )
@@ -49,11 +45,10 @@
 
 								// Remove existing error if any
 								// @TODO use error reporting service
-								delete scope.error;
+								delete $scope.error;
 
 								// Set data on scope
-								scope.tracks = response.data.tracks;
-								console.log(scope.tracks);
+								$scope.tracks = response.data.tracks;
 							})
 							.catch( function( error ) {
 
@@ -61,13 +56,36 @@
 
 								// @TODO add error reporting here
 								// notify error
-								scope.error = error;
+								$scope.error = error;
 							});
-					}
+					};
+				},
 
-					// when value of input changes, update songs list
-					el.find('input')
-						.bind('change', scope.querySpotifySongs);
+				// build functionality around each spotify-search widget
+				link: function( scope, el, attr ) {
+
+					/**
+					 * #onSearcgChange()
+					 * Runs whenever the user's search text changes
+					 */
+					scope.onSearchChange = function ( ) {
+
+						// Get the current value of the input
+						var q = scope.sq;
+
+						// If query string is empty, empty song list 
+						// and don't run query
+						if ( q === "" ) {
+							return scope.tracks = [];
+						}
+
+						// If valid search, send Spotify API call
+						scope.runSearch ( q );
+
+					};
+
+					// when search changes, update songs list
+					scope.$watch('sq', scope.onSearchChange);
 						
 				}
 
