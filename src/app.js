@@ -19,7 +19,16 @@
 
 	app.config(function($stateProvider) {
 		$stateProvider
-			.state('playlist', {
+			.state('playlists', {
+				url: '/playlists',
+				abstract: true,
+				template: '<ui-view />'
+			})
+			.state('playlists.index', {
+				url: '/',
+				templateUrl: 'views/selectplaylist.html'
+			})
+			.state('playlists.details', {
 				url: '/:permalink',
 				templateUrl: 'views/playlist.html',
 				controller: 'PlaylistCtrl'
