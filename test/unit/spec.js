@@ -122,31 +122,6 @@ describe("PlaylistsCtrl", function () {
 			});
 		});
 
-		it("doesn't overwrite exitsting playlists in $scope.playlists", function() {
-			var playlist1 = createPlaylist()
-			  , playlist2 = createPlaylist();
-
-			playlist1.name = "onesong";
-			playlist2.name = "twosongs";
-
-			this.scope.playlists = [playlist1];	
-			this.Store._data.playlists = [playlist2];
-
-			runs(function() {
-				this.scope.loadPlaylists( "playlists" );
-				this.$rootScope.$digest();
-			});
-
-			waitsFor(function() {
-				return this.scope.playlists.length === 2;
-			}, "playlists has length", 50);
-
-			runs(function() {
-				expect(this.scope.playlists[0].name).toEqual("onesong");
-				expect(this.scope.playlists[1].name).toEqual("twosongs");
-			});
-
-		});
 	});
 });
 
