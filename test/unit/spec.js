@@ -364,6 +364,38 @@ describe("Playlitics.DOM.spotifySearch", function() {
 
 		}));
 
+		// Should only happen when directive is firat instantiated
+		describe("a null or undefined query", function() {
+			var scope, el;
+
+			beforeEach(function() {
+				scope = this.scope;
+				el    = this.$compile('<spotify-search></spotify-search>')(scope);
+
+				scope.$apply();
+			})
+
+			it("should return empty array from onSearchChange", function() {
+
+				// Assert
+				expect(scope.onSearchChange()).toEqual([]);
+
+			});
+
+			it("should not call runSearch", function() {
+
+				// Setup
+				spyOn(scope, 'runSearch');
+
+				// Act
+				scope.onSearchChange();
+
+				// Assert
+				expect(scope.runSearch).not.toHaveBeenCalled();
+
+			});
+		});
+
 		describe("an empty string", function() {
 			var scope, el;
 
@@ -401,7 +433,7 @@ describe("Playlitics.DOM.spotifySearch", function() {
 
 			});
 
-		})
+		});
 
 	});
 

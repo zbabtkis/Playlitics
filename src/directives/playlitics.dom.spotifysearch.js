@@ -75,7 +75,7 @@
 
 						// If query string is empty, empty song list 
 						// and don't run query
-						if ( q === "" ) {
+						if ( !q ) {
 							return scope.tracks = [];
 						}
 
