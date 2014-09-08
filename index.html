@@ -19,22 +19,17 @@
 
 		<section class="playlist-list">
 			<ul>
-				<li ng-repeat="plist in playlists">
-					<a permalink="plist.name"><h1>{{plist.name}}</h1></a>
+				<li ui-sref-active="active" ng-repeat="plist in playlists">
+					<a ui-sref="playlists.details({permalink: getPermalink(plist.name) })"><h1>{{plist.name}}</h1></a>
 					<p class="tags" ng-repeat="tag in plist.tags">
 						<span class="tag">{{tag}}</span>
 					</p>
-					<button ng-click="playlists.splice($index, 1)">Delete</button>
+					<button ng-click="removePlaylist( plist )">Delete</button>
 				</li>
 			</ul>
 		</section>
 
-			
-		<spotify-search>
-			<track-list ng-model="tracks" on-track-select="addtrack" />
-		</spotify-search>
-
-		<ui-view></ng-view>
+		<ui-view></ui-view>
 	</div>
 
 	<script src="./components/angular/angular.min.js"></script>
@@ -51,5 +46,6 @@
 
 	<script src="./src/app.js"></script>
 	<script src="./src/controllers/playlitics.playlists.ctrl.js"></script>
+	<script src="./src/controllers/playlitics.playlist.ctrl.js"></script>
 </body>
 </html>
