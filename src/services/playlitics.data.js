@@ -1,6 +1,6 @@
 /**
- * Playlitics.Data
- * Module for Playlitics data
+ * @package Playlitics.Data
+ * Module declaration for Playlitics data
  */
 
 ;(function( ng ) {

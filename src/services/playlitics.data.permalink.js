@@ -1,3 +1,11 @@
+/**
+ * Permalink
+ * Build url safe links
+ *
+ * @package Playlitics.Data
+ * @class   Service
+ */
+ 
 ;(function( ng ) {
 
 	ng.module("Playlitics.Data")

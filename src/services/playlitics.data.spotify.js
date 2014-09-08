@@ -1,6 +1,9 @@
 /**
- * Playlitics.Data [ Service ] - Spotify
+ * Spotify
  * Query Spotify API
+ * 
+ * @package Playlitics.Data
+ * @class   Service
  */
 
 ;(function(ng) {

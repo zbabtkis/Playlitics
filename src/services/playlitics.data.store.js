@@ -1,6 +1,9 @@
 /**
- * Playlitics.Data [ Service ] - Store
+ * Store
  * localStorage DataStore service
+ * 
+ * @package Playlitics.Data
+ * @class   Service
  */
 ;(function ( ng ) {
 
