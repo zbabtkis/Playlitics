@@ -1,9 +1,9 @@
 /**
- * [ Controller ] PlaylistsCtrl
- *
+ * PlaylistsCtrl
  * Handles playlist creation, deletion and listing
  *
- * @requires Playlitics.Store
+ * @package Playlitics
+ * @class   Controller
  */
 
 ;(function ( ng ) {
@@ -25,7 +25,7 @@
 			 * build Playlist structure
 			 * @return { Object } - playlist object
 			 */
-			function __createPlaylist() {
+			function __createPlaylist () {
 				return {
 					name: "",
 					route: "",
@@ -38,7 +38,7 @@
 			 * #__persistPlaylist();
 			 * Save playlists array to Store
 			 */
-			function __persistPlaylists() {
+			function __persistPlaylists () {
 				Store.persist( STORE_NAME, $scope.playlists );
 			}
 
@@ -48,7 +48,7 @@
 			 *
 			 * @param { String } - name - name of new playlist
 			 */
-			$scope.addPlaylist = function( playlist ) {
+			$scope.addPlaylist = function ( playlist ) {
 
 				// Null playlist names should be ignored
 				if ( !playlist || !playlist.name ) return;
@@ -81,7 +81,7 @@
 			 *
 			 * @param { Service } - Store - Storage source to fetch playlist data from
 			 */
-			$scope.loadPlaylists = function( store ) {
+			$scope.loadPlaylists = function ( store ) {
 				Store.fetch( store )
 					.then(function(data) {
 						$scope.playlists = data;
@@ -92,8 +92,22 @@
 			 * #getPermalink();
 			 * Get URI safe permalink
 			 */
-			$scope.getPermalink = function( name ) {
+			$scope.getPermalink = function ( name ) {
 				return Permalink.create( name );
+			};
+
+			$scope.getCoolnessFactor = function ( playlist ) {
+				var coolness = playlist.tracks.reduce( function( total, track ) {
+					return total + (track.length * track.popularity);
+				}, 0);
+
+				return coolness / $scope.getDuration( playlist );
+			};
+
+			$scope.getDuration = function ( playlist ) {
+				return playlist.tracks.reduce( function (total, track ) {
+					return total + track.length;
+				}, 0);
 			};
 
 			// On fist load, load all cached playlists
