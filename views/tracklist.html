@@ -1,10 +1,8 @@
-<ul>
+<ul class="dropdown no-bullet spotify-results" ng-show="tracks.length">
 	<li ng-click="trackSelect( track )" ng-repeat="track in tracks">
-		<h1 class="track-title">{{track.name}}</h1>
+		<h2 class="track-title">{{track.name}}</h2>
 		<span class="artists">
-			<ul>
-				<li ng-repeat="artist in track.artists"><a ng-href="{{artist.href}}">{{artist.name}}</a></li>
-			</ul>
+			<span ng-repeat="artist in track.artists">{{artist.name}}{{$last ? "" : "," }}</span>
 		</span>
 	</li>
 </ul>

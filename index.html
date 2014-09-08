@@ -6,46 +6,91 @@
 	<meta name="viewport" content="width=device-width" />
 
 	<title>Playlitics</title>
+
+	<link rel="stylesheet" href="./components/foundation/css/normalize.css" />
+	<link rel="stylesheet" href="./components/foundation/css/foundation.css" />
+	<link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="./css/app.css" />
 </head>
 <body ng-app="Playlitics">
 
-	<div ng-controller="PlaylistsCtrl">
+	<header id="playlitics-header">
+		<div class="row">
 
-		<form class="create-playlist">
-			<input ng-model="nextPlaylist.name" 
-				placeholder="Enter playlist name" />
-			<button ng-click="addPlaylist(nextPlaylist)">+</button>
-		</form>
+			<h1 class="title">Playlitics <span class="sub-title">Build your best playlist</span></h1>
 
-		<section class="playlist-list">
-			<ul>
-				<li ui-sref-active="active" ng-repeat="plist in playlists">
-					<a ui-sref="playlists.details({permalink: getPermalink(plist.name) })"><h1>{{plist.name}}</h1></a>
-					<p class="tags" ng-repeat="tag in plist.tags">
-						<span class="tag">{{tag}}</span>
-					</p>
-					<button ng-click="removePlaylist( plist )">Delete</button>
-				</li>
-			</ul>
-		</section>
+		</div>
+	</header>
 
-		<ui-view></ui-view>
-	</div>
+	<main ng-controller="PlaylistsCtrl" id="playlitics-content">
+		<div class="row">
 
+			<div class="small-12 medium-6 large-4 columns">
+				<section class="content dark no-bezel">
+					<h2 class='content-title'>My Playlists</h2>
+					<form class="create-playlist" ng-submit="addPlaylist(nextPlaylist)">
+						<div class="row collapse postfix-round">
+							<div class="small-9 columns">
+								<input type="text" 
+									ng-model="nextPlaylist.name" 
+									placeholder="What's your new playlist's name?" />
+							</div>
+							<div class="small-3 columns">
+								<button class="button tiny postfix">
+									<i class="fa fa-plus"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+
+					<section class="list playlist-list">
+						<ul class="no-bullet">
+							<li ng-class="{even: $even}" ui-sref-active="active" ng-repeat="plist in playlists">
+								<a ui-sref="playlists.details({permalink: getPermalink(plist.name) })">
+									<h2>{{plist.name}}</h2>
+								</a>
+
+								<p class="duration">{{getDuration(plist) | duration}}</p>
+							</li>
+						</ul>
+					</section>
+				</section>
+			</div>
+
+			<div class="small-12 medium-6 large-8 columns">
+
+				<ui-view></ui-view>
+
+			</div>
+		</div>
+	</main>
+
+	<script src="./components/jquery/dist/jquery.min.js"></script>
 	<script src="./components/angular/angular.min.js"></script>
-	<script src="./components/angular-ui-router/release/angular-ui-router.min.js"></script>	
+	<script src="./components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="./components/hammerjs/hammer.min.js"></script>	
+	<script src="./components/angular-hammer/angular-hammer.js"></script>
+	<script src="./components/ngRepeatReorder/dist/ngRepeatReorder.js"></script>
+	<script src="./components/foundation/js/foundation.min.js"></script>
 
 	<script src="./src/services/playlitics.data.js"></script>
 	<script src="./src/services/playlitics.data.spotify.js"></script>
 	<script src="./src/services/playlitics.data.store.js"></script>
 	<script src="./src/services/playlitics.data.permalink.js"></script>
+
 	<script src="./src/directives/playlitics.dom.js"></script>
 	<script src="./src/directives/playlitics.dom.spotifysearch.js"></script>
 	<script src="./src/directives/playlitics.dom.tracklist.js"></script>
-	<script src="./src/directives/playlitics.dom.permalink.js"></script>
+
+	<script src="./src/filters/playlitics.filters.js"></script>
+	<script src="./src/filters/playlitics.filters.duration.js"></script>
+	<script src="./src/filters/playlitics.filters.percent.js"></script>
 
 	<script src="./src/app.js"></script>
 	<script src="./src/controllers/playlitics.playlists.ctrl.js"></script>
 	<script src="./src/controllers/playlitics.playlist.ctrl.js"></script>
+	<script src="./src/controllers/playlitics.spotifysearch.ctrl.js"></script>
+
+	<script>jQuery(document).foundation();</script>
 </body>
 </html>

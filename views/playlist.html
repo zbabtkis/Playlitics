@@ -1,21 +1,66 @@
-<article ng-hide="!playlist || playlist.destroyed">
-	<spotify-search>
-		<track-list ng-model="tracks" on-track-select="addtrack" />
-	</spotify-search>
-	<h1>{{playlist.name}}</h1>
-	<section class="tracks">
-		<ul>
-			<li ng-repeat="track in playlist.tracks">
-				<h1 class="track-title">{{track.name}}</h1>
-				<span class="artists">
-					<ul>
-						<li ng-repeat="artist in track.artists"><a ng-href="{{artist.href}}">{{artist.name}}</a></li>
-					</ul>
-				</span>
-			</li>
-		</ul>
-	</section>
-</article>
-<div ng-show="!playlist || playlist.destroyed">
-	This playlist no longer exists. Please select a different playlist
-</div>
+<div class="content">
+
+	<article ng-hide="!playlist || playlist.destroyed" class="playlist">
+		<h2 class='content-title'>{{playlist.name}}</h2>
+		<label class="right"><i class="fa fa-star-o"></i> Coolness Factor
+			<span class="coolness-factor">{{getCoolnessFactor(playlist) | percent}}</span>
+		</label>
+
+		<fieldset class="tags">
+			<legend>Tags</legend>
+			<form ng-submit="playlist.tags.push(nextTag); nextTag=''">
+				<input type="text" placeholder="enter tags..." ng-model="nextTag" />
+			</form>
+			<span class='tag' ng-repeat="tag in playlist.tags">
+				{{tag}}
+				<i class="fa fa-remove" ng-click="removeTag(tag )"></i>
+			</span>
+		</fieldset> <!-- /.tags -->
+
+		<spotify-search>
+			<track-list ng-model="tracks" on-track-select="addtrack" />
+		</spotify-search>
+
+		<section class="tracks" ng-show="playlist.tracks.length">
+
+			<ul class="list track-list reorderable-list">
+
+				<li ng-class="{even: $even}" ng-repeat-reorder="track in playlist.tracks" ng-repeat-reorder-handle=".handle" class='track row'>
+
+					<span class="handle small-2 columns">
+						<i class="fa fa-bars fa-2x"></i>
+					</span>
+
+					<div class="info small-8 columns">
+						<h2 class="track-title">{{track.name | limitTo:20}}
+							<span class="artists">
+								<span ng-repeat="artist in track.artists">
+									{{artist.name}}{{$last ? '' : ', '}}
+								</span>
+							</span>
+						</h2>
+						<span class="popularity label"><i class="fa fa-thumbs-up"></i> {{track.popularity | percent}}</span>
+						<span class="duration">{{track.length | duration}}</span>
+					</div> <!-- /.info -->
+
+					<div class="actions small-2 columns">
+						<button class='button small alert' ng-click="removeTrack( track )">
+							<i class="fa fa-trash"></i>
+						</button>
+					</div>
+				</li>
+
+			</ul>
+
+		</section> <!-- /.tracks -->
+
+		<button class="button tiny alert" ng-click="removePlaylist( playlist )">Delete this playlist</button>
+
+	</article> <!-- /.playlist -->
+
+	<div ng-show="!playlist || playlist.destroyed">
+		<h2>Uh oh...</h2>
+		<p>This playlist no longer exists. Please select a different playlist</p>
+	</div>
+
+</div> <!-- /.content -->
