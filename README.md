@@ -1,7 +1,7 @@
 Playlitics
 ==========
 
-An awesome Spotify playlist building app for building awesome Spotify playlists
+Build the best playlist on spotify
 
 Installation
 ============
